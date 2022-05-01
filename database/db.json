@@ -1,0 +1,6 @@
+{
+    "tasks": [
+        {"description": "JS Course", "id": 1},
+        {"description": "Clean up", "id": 2}
+    ]
+}
