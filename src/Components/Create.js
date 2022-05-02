@@ -1,21 +1,44 @@
-import {useState} from "react";
-import {useNavigate} from "react-router-dom"
+import { useState } from "react";
+import { useNavigate } from "react-router-dom"
 
 const Create = () => {
     const navigate = useNavigate();
-    const [description, setDescription] = useState();
+    const [data, setData] = useState('');
+    const [isPending, setIsPending] = useState(false);
 
-    const handleChange = (e) => setDescription(e.target.value);
+    const handleChange = (e) => setData(e.target.value);
+
+    /* Send data */
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        const task = {data};
+
+        setIsPending(true);
+
+        fetch("http://localhost:8000/tasks", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(task)
+        })
+        .then(() => {
+            setIsPending(false);
+            console.log("Task successfully created =)");
+            navigate("/");
+        })       
+    }
 
     return (
         <div>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <label>Task Name:</label>
                 <input
-                value={description}
-                onChange={(e) => handleChange(e)}
-                required
+                    value={data}
+                    onChange={handleChange}
+                    required
                 />
+                {!isPending && <button>Create task</button>}
+                {isPending && <button>Creating...</button>}
             </form>
 
             <button onClick={() => navigate("/")}>Back to main</button>

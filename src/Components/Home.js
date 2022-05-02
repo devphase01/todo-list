@@ -1,16 +1,17 @@
+import Content from "./Content"
 import Header from "./Header"
-import useFetch from "./useFetch";
-import Tasks from "./Tasks";
+import Timer from "./Timer";
+import useFetch from "./useFetch"
 
 const Home = () => {
-    const {data: tasks, isPending, error} = useFetch("http://localhost:8000/tasks");
+    const {data: tasks, isPending} = useFetch("http://localhost:8000/tasks");
 
     return (
         <div className="home-page">
             <Header />
-            {error && <div>{ error }</div>}
-            {isPending && <div>Loading...</div>}
-            {tasks && <Tasks tasks={tasks}/>}
+            {isPending && <p>Loading...</p>}
+            {tasks && <Content tasks={tasks} />}
+            <Timer />         
         </div>
     )
 }

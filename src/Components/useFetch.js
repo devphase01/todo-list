@@ -1,35 +1,35 @@
-import {useState, useEffect} from "react";
+import { useEffect, useState } from "react"
 
 const useFetch = (url) => {
-    const [data, setData] = useState(null);
-    const [isPending, setIsPending] = useState(true);
     const [error, setError] = useState(null);
+    const [data, setData] = useState(null);
+    const [isPending, setIsPending] = useState(false);
 
     useEffect(() => {
         const AbortCont = new AbortController();
 
         fetch(url, {signal: AbortCont.signal})
             .then(res => {
-                if (!res.ok) throw new Error("Can't get the data =(");
+                if(!res.ok) throw new Error("Can't catch the data");
                 return res.json();
             })
             .then(data => {
-                setData(data);
                 setError(null);
                 setIsPending(false);
+                setData(data);
             })
             .catch(err => {
-                if (err.name === "Abort") {
+                if(err.message === "Abort") {
                     console.log("Fetch aborted");
                 } else {
-                    setIsPending(false);
                     setError(err.message);
+                    setIsPending(false);
                 }
             })
-        return () => AbortCont.abort();
+        return () => AbortCont.abort();    
     }, [url]);
 
-    return {data, isPending, error}
+    return {data, isPending, error};
 }
 
-export default useFetch;
+export default useFetch
