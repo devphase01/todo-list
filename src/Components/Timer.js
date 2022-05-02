@@ -5,7 +5,7 @@ const Timer = () => {
 
     setInterval(() => setCurrentDate(new Date().toLocaleTimeString()), 999);
     return (
-        <div>{ currentDate }</div>
+        <div><h3>Live Time:</h3>{ currentDate }</div>
     )
 }
 
