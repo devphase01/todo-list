@@ -1,3 +1,12 @@
 {
-  "tasks": []
+  "tasks": [
+    {
+      "data": "Read a book",
+      "id": 1
+    },
+    {
+      "data": "Create a delete button on tasks",
+      "id": 2
+    }
+  ]
 }
